@@ -3,7 +3,7 @@ import { IsEmail, IsNumber, IsString, IsBoolean, IsOptional, IsObject } from "cl
 export class CreateClienteDto {
     @IsOptional()
     @IsBoolean()
-    yaRegistrado?: boolean;
+    primeraVez?: boolean;
 
     @IsString()
     nombre: string;
