@@ -31,7 +31,6 @@ export class ClientesService {
       mascota: createClienteDto.mascota,
       cita: createClienteDto.cita
     };
-
     
     try {
       const ipDeLee = ''; 
@@ -45,7 +44,7 @@ export class ClientesService {
         respuestaMascotas: respuesta.data
       };
     } catch (error) {
-      console.error('Error al conectar con Lee:', error.message);
+        console.error('Error al crear mascota:', (error as Error).message);
       return { 
         mensaje: "Cliente creado en tu BD, yet, fallo en conexion a servidor.",
         cliente: clienteGuardado 
@@ -64,4 +63,38 @@ export class ClientesService {
       throw new BadRequestException("No se pudo hacer la lista de los clientes");
     }
   }
-}
+
+
+  findOne(id: number) {
+    return `This action returns a #${id} cliente`;
+  }
+
+  update(id: number, updateClienteDto: UpdateClienteDto) {
+    return `This action updates a #${id} cliente`;
+  }
+
+  async remove(id: number) {
+    try {
+      await this.clienteRepository.delete(id);
+      console.log(`Cliente ${id} eliminado de la base de datos local.`);
+    } catch (error) {
+      throw new BadRequestException(`No se pudo eliminar el cliente #${id}`);
+    }
+
+    try {
+      const ipDeLee = ''; 
+      const urlB2 = `http://${ipDeLee}:3002/mascotas/dueno/${id}`;
+      
+      await firstValueFrom(this.httpService.delete(urlB2));
+      
+      return { 
+        mensaje: `Cliente ${id} eliminado. Petición en cascada enviada a Mascotas exitosamente.` 
+      };
+    } catch (error) {
+      console.error('Error al borrar mascotas con Lee:', (error as Error).message);
+      return { 
+        mensaje: `Cliente ${id} eliminado de tu BD, pero falló la conexión para borrar sus mascotas.` 
+      };
+    }
+    }
+  }
