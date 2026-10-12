@@ -74,10 +74,13 @@ export class ClientesService {
   }
 
   async remove(id: number) {
-    try {
+    try 
+    {
       await this.clienteRepository.delete(id);
       console.log(`Cliente ${id} eliminado de la base de datos local.`);
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new BadRequestException(`No se pudo eliminar el cliente #${id}`);
     }
 
@@ -87,13 +90,13 @@ export class ClientesService {
       
       await firstValueFrom(this.httpService.delete(urlB2));
       
-      return { 
-        mensaje: `Cliente ${id} eliminado. Petición en cascada enviada a Mascotas exitosamente.` 
-      };
-    } catch (error) {
+      return {mensaje: `Cliente ${id} eliminado. enviando a Mascotas exitosamente.`};
+
+    } 
+    catch (error) {
       console.error('Error al borrar mascotas con Lee:', (error as Error).message);
       return { 
-        mensaje: `Cliente ${id} eliminado de tu BD, pero falló la conexión para borrar sus mascotas.` 
+        mensaje: `Cliente ${id} eliminado de tu BD, fallo en la conexion anyways.` 
       };
     }
     }
