@@ -25,31 +25,6 @@ export class ClientesService {
     } catch (error) {
       throw new BadRequestException("Error en la creacion del cliente en la base de datos");
     }
-
-    const payloadParaB2 = {
-      cliente_id: clienteGuardado.id, 
-      mascota: createClienteDto.mascota,
-      cita: createClienteDto.cita
-    };
-    
-    try {
-      const ipDeLee = ''; 
-      const urlB2 = `http://${ipDeLee}:3002/mascotas`;
-      
-      const respuesta = await firstValueFrom(this.httpService.post(urlB2, payloadParaB2));
-      
-      return {
-        mensaje: "Cliente creado exitosamente. enviando a Mascotas.",
-        cliente: clienteGuardado,
-        respuestaMascotas: respuesta.data
-      };
-    } catch (error) {
-        console.error('Error al crear mascota:', (error as Error).message);
-      return { 
-        mensaje: "Cliente creado en tu BD, yet, fallo en conexion a servidor.",
-        cliente: clienteGuardado 
-      };
-    }
   }
 
   async findAll() {
@@ -88,7 +63,7 @@ export class ClientesService {
       const ipDeLee = ''; 
       const urlB2 = `http://${ipDeLee}:3002/mascotas/dueno/${id}`;
       
-      await firstValueFrom(this.httpService.delete(urlB2));
+      await firstValueFrom(this.httpService.delete(urlB2, {timeout : 5000}));
       
       return {mensaje: `Cliente ${id} eliminado. enviando a Mascotas exitosamente.`};
 

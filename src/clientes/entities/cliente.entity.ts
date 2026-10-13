@@ -6,12 +6,19 @@ export class Cliente {
     id: number
     @Column({type: "varchar"})
     nombre: string
+
+    @Column({type: "varchar"})
+    apellido: string
+
     @Column({type: "varchar"})
     direccion: string
-    @Column()
+
+    @Column({unique: true})
     telefono: number
-    @Column()
+    @Column({unique: true})
     correo: string
     
 
 }
+
+//add unique. 

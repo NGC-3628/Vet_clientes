@@ -8,6 +8,10 @@ export class CreateClienteDto {
     @IsString()
     nombre: string;
 
+    //AGG apellido
+    @IsString()
+    apellido: string;
+
     @IsString()
     direccion: string;
 
@@ -17,12 +21,4 @@ export class CreateClienteDto {
     @IsString()
     @IsEmail()
     correo: string;
-
-    @IsOptional()
-    @IsObject()
-    mascota?: any; 
-
-    @IsOptional()
-    @IsObject()
-    cita?: any;
 }
