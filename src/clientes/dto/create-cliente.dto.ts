@@ -1,9 +1,6 @@
-import { IsEmail, IsNumber, IsString, IsBoolean, IsOptional, IsObject } from "class-validator";
+import { IsEmail, IsNumber, IsString, IsBoolean, IsOptional, IsObject, IsNotEmpty, MaxLength } from "class-validator";
 
 export class CreateClienteDto {
-    @IsOptional()
-    @IsBoolean()
-    primeraVez?: boolean;
 
     @IsString()
     nombre: string;
@@ -13,10 +10,12 @@ export class CreateClienteDto {
     apellido: string;
 
     @IsString()
-    direccion: string;
+    @IsNotEmpty()
+    @MaxLength(10)
+    telefono: string; 
 
-    @IsNumber()
-    telefono: number;
+    @IsString()
+    direccion: string;
 
     @IsString()
     @IsEmail()
